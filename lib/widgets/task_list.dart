@@ -16,6 +16,8 @@ class TaskList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
+      physics: NeverScrollableScrollPhysics(),
+      shrinkWrap: true,
       itemCount: tasks.length,
       itemBuilder: (context, index) {
         final task = tasks[index];
