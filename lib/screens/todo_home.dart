@@ -11,7 +11,7 @@ class TodoHome extends StatefulWidget {
 class _TodoHomeState extends State<TodoHome> {
   final List<Task> _tasks = [];
   final TextEditingController _taskController = TextEditingController();
-  final FocusNode _taskFocusNode = FocusNode(); // Added FocusNode
+  final FocusNode _taskFocusNode = FocusNode();
 
   void _addTask() {
     if (_taskController.text.isEmpty) return;
@@ -19,12 +19,8 @@ class _TodoHomeState extends State<TodoHome> {
       _tasks.add(Task(id: DateTime.now().toString(), title: _taskController.text));
     });
     _taskController.clear();
-
-    // Keep the focus on the text field after adding a task
-    FocusScope.of(context).requestFocus(_taskFocusNode); // Request focus on the specific FocusNode
+    FocusScope.of(context).requestFocus(_taskFocusNode);
   }
-
-
 
   void _deleteTask(String taskId) {
     setState(() {
@@ -39,12 +35,26 @@ class _TodoHomeState extends State<TodoHome> {
     });
   }
 
+  void _toggleAllUnfinished() {
+    setState(() {
+      for (var task in _tasks.where((task) => !task.isCompleted)) {
+        task.isCompleted = true;
+      }
+    });
+  }
+
+  void _toggleAllFinished() {
+    setState(() {
+      for (var task in _tasks.where((task) => task.isCompleted)) {
+        task.isCompleted = false;
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    // Separate tasks into finished and unfinished
     List<Task> finishedTasks = [];
-    List<Task> unfinishedTasks = [];
-
+    List<Task> unfinishedTasks = [];;
     for (var task in _tasks) {
       if (task.isCompleted) {
         finishedTasks.add(task);
@@ -66,15 +76,22 @@ class _TodoHomeState extends State<TodoHome> {
                 if (unfinishedTasks.isNotEmpty)
                   ExpansionTile(
                     title: Text('${unfinishedTasks.length} Tasks left'),
-                    initiallyExpanded: true, 
+                    initiallyExpanded: true,
                     children: [
+                      Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: ElevatedButton(
+                          onPressed: _toggleAllUnfinished,
+                          child: Text('Toggle All Unfinished Tasks'),
+                        ),
+                      ),
                       TaskList(
-                      tasks: unfinishedTasks,
-                      onToggleComplete: _toggleComplete,
-                      onDelete: _deleteTask,
-                  ),
+                        tasks: unfinishedTasks,
+                        onToggleComplete: _toggleComplete,
+                        onDelete: _deleteTask,
+                      ),
                     ],
-                    ),
+                  ),
                 // Add Task Input Field after unfinished tasks
                 AddTaskField(
                   taskController: _taskController,
@@ -85,8 +102,15 @@ class _TodoHomeState extends State<TodoHome> {
                 if (finishedTasks.isNotEmpty)
                   ExpansionTile(
                     title: Text('${finishedTasks.length} Completed tasks'),
-                    initiallyExpanded: true, 
+                    initiallyExpanded: true,
                     children: [
+                      Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: ElevatedButton(
+                          onPressed: _toggleAllFinished,
+                          child: Text('Toggle All Finished Tasks'),
+                        ),
+                      ),
                       TaskList(
                         tasks: finishedTasks,
                         onToggleComplete: _toggleComplete,
