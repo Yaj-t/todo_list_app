@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import '../models/task.dart';
 import '../widgets/add_task_field.dart';
-import '../widgets/task_tile.dart'; // Import TaskTile
+import '../widgets/task_list.dart'; // Import TaskTile
+
 
 class TodoHome extends StatefulWidget {
   @override
@@ -49,16 +50,10 @@ class _TodoHomeState extends State<TodoHome> {
             ),
           ),
           Expanded(
-            child: ListView.builder(
-              itemCount: _tasks.length,
-              itemBuilder: (context, index) {
-                final task = _tasks[index];
-                return TaskTile(
-                  task: task,
-                  onToggleComplete: _toggleComplete,
-                  onDelete: _deleteTask,
-                );
-              },
+            child: TaskList(
+              tasks: _tasks,
+              onToggleComplete: _toggleComplete,
+              onDelete: _deleteTask,
             ),
           ),
         ],
