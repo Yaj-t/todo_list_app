@@ -11,6 +11,7 @@ class TodoHome extends StatefulWidget {
 class _TodoHomeState extends State<TodoHome> {
   final List<Task> _tasks = [];
   final TextEditingController _taskController = TextEditingController();
+  final FocusNode _taskFocusNode = FocusNode(); // Added FocusNode
 
   void _addTask() {
     if (_taskController.text.isEmpty) return;
@@ -18,7 +19,12 @@ class _TodoHomeState extends State<TodoHome> {
       _tasks.add(Task(id: DateTime.now().toString(), title: _taskController.text));
     });
     _taskController.clear();
+
+    // Keep the focus on the text field after adding a task
+    FocusScope.of(context).requestFocus(_taskFocusNode); // Request focus on the specific FocusNode
   }
+
+
 
   void _deleteTask(String taskId) {
     setState(() {
@@ -73,6 +79,7 @@ class _TodoHomeState extends State<TodoHome> {
                 AddTaskField(
                   taskController: _taskController,
                   onAddTask: _addTask,
+                  focusNode: _taskFocusNode,
                 ),
                 // Display finished tasks
                 if (finishedTasks.isNotEmpty)
