@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '../models/task.dart';
+import '../widgets/task_list.dart';
 import '../widgets/add_task_field.dart';
-import '../widgets/task_tile.dart'; // Import TaskTile
 
 class TodoHome extends StatefulWidget {
   @override
@@ -35,30 +35,59 @@ class _TodoHomeState extends State<TodoHome> {
 
   @override
   Widget build(BuildContext context) {
+    // Separate tasks into finished and unfinished
+    List<Task> finishedTasks = [];
+    List<Task> unfinishedTasks = [];
+
+    for (var task in _tasks) {
+      if (task.isCompleted) {
+        finishedTasks.add(task);
+      } else {
+        unfinishedTasks.add(task);
+      }
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: Text('To-Do List'),
       ),
       body: Column(
         children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: AddTaskField(
-              taskController: _taskController,
-              onAddTask: _addTask,
-            ),
-          ),
           Expanded(
-            child: ListView.builder(
-              itemCount: _tasks.length,
-              itemBuilder: (context, index) {
-                final task = _tasks[index];
-                return TaskTile(
-                  task: task,
-                  onToggleComplete: _toggleComplete,
-                  onDelete: _deleteTask,
-                );
-              },
+            child: ListView(
+              children: <Widget>[
+                // Display unfinished tasks first
+                if (unfinishedTasks.isNotEmpty)
+                  ExpansionTile(
+                    title: Text('${unfinishedTasks.length} Tasks left'),
+                    initiallyExpanded: true, 
+                    children: [
+                      TaskList(
+                      tasks: unfinishedTasks,
+                      onToggleComplete: _toggleComplete,
+                      onDelete: _deleteTask,
+                  ),
+                    ],
+                    ),
+                // Add Task Input Field after unfinished tasks
+                AddTaskField(
+                  taskController: _taskController,
+                  onAddTask: _addTask,
+                ),
+                // Display finished tasks
+                if (finishedTasks.isNotEmpty)
+                  ExpansionTile(
+                    title: Text('${finishedTasks.length} Completed tasks'),
+                    initiallyExpanded: true, 
+                    children: [
+                      TaskList(
+                        tasks: finishedTasks,
+                        onToggleComplete: _toggleComplete,
+                        onDelete: _deleteTask,
+                      ),
+                    ],
+                  ),
+              ],
             ),
           ),
         ],
