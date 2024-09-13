@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 
 class AddTaskField extends StatelessWidget {
   final TextEditingController taskController;
+  final FocusNode focusNode; // Added FocusNode parameter
   final Function() onAddTask;
 
   const AddTaskField({
     required this.taskController,
     required this.onAddTask,
+    required this.focusNode, // Added FocusNode parameter
   });
 
   @override
@@ -18,6 +20,7 @@ class AddTaskField extends StatelessWidget {
           Expanded(
             child: TextField(
               controller: taskController,
+              focusNode: focusNode, // Set the FocusNode
               onSubmitted: (_) => onAddTask(),
               decoration: InputDecoration(
                 labelText: 'List item',
