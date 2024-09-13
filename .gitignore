@@ -140,3 +140,4 @@ app.*.symbols
 !.vscode/settings.json
 
 /windows
+/0hide
