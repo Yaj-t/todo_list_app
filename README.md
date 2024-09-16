@@ -6,7 +6,7 @@ A simple Flutter application for managing tasks. This app allows users to add, d
 
 Check out the demo video and screenshots of the app:
 
-- **[View Demo Video and Screenshots]([https://drive.google.com/drive/folders/your_folder_id?usp=sharing](https://drive.google.com/drive/folders/1B1MGzZ1Gxx9heEg2FvJfXHhmBVrZt8uD?usp=sharing))**
+- **[View Demo Video and Screenshots](https://drive.google.com/drive/folders/1B1MGzZ1Gxx9heEg2FvJfXHhmBVrZt8uD?usp=sharing)**
 
 ## Features
 
