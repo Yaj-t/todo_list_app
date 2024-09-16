@@ -2,11 +2,11 @@
 
 A simple Flutter application for managing tasks. This app allows users to add, delete, and toggle tasks between completed and incomplete statuses. Tasks can be organized into unfinished and completed categories.
 
-## Demo Video
+## Demo and Screenshots
 
-Check out the demo video of the app to see it in action:
+Check out the demo video and screenshots of the app:
 
-[Watch the demo video](https://drive.google.com/file/d/1nYY-yGz8KHe1GSQuSCSgofY5tcnoPKXX/view?usp=sharing)
+- **[View Demo Video and Screenshots]([https://drive.google.com/drive/folders/your_folder_id?usp=sharing](https://drive.google.com/drive/folders/1B1MGzZ1Gxx9heEg2FvJfXHhmBVrZt8uD?usp=sharing))**
 
 ## Features
 
